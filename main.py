@@ -1,0 +1,1 @@
+from my_package.my_modules_BC.module_B import foo_module_B
