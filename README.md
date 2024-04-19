@@ -74,7 +74,7 @@ my_project
         └───module_C.py
 ```
 
-The following code is from `module_B.py`:
+The following code is from [`module_B.py`](my_package/my_modules_BC/module_B.py):
 ```python
 import sys, os
 
@@ -92,7 +92,7 @@ from my_package.my_modules_A.module_A import foo_module_A
 from module_C import foo_module_C
 ```
 
-The following code is from `main.py`:
+The following code is from [`main.py`](main.py):
 ```python
 from my_package.my_modules_BC.module_B import foo_module_B
 ```
