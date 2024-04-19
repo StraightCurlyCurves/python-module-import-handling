@@ -57,6 +57,8 @@ This appending is done in the module where the import of module A is needed, by 
 
 The `os.path.realpath()`, `os.path.join()` and `os.path.dirname()` functions are used to calculate the absolute path to the shared top-level directory from the current file. This absolute path is then added to `sys.path`, allowing Python to successfully import module A even when the execution context changes or module A resides outside of module B's parent directory.
 
+Alternatively, directly appending module A's absolute path to `sys.path` would also work. In this case, module A would be imported without any prefixes, as `import module_A`. However, this method triggers an unresolved import warning from Pylance, despite successful runtime import, impacting code readability.
+
 
 
 ## Example
