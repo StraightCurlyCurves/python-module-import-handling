@@ -33,16 +33,16 @@ Furthermore, it eliminates the need for relative imports using dot notation. Con
 
 ## Issue #1
 
-The issue at hand pertains to the scope of Python's module import mechanism. When importing module A into module B using a relative path, the import operation is successful as long as the execution context is within the project directory. However, difficulties arise when attempting to import module B from a main file located outside the project directory.
+The issue at hand pertains to the scope of Python's module import mechanism. When importing module A into module B using a relative path, the import operation is successful as long as the execution context remains within the directory where module B is located, referred to here as the project directory. However, difficulties arise when attempting to import module B from a main file located outside this project directory.
 
-The relative import path in module B, which is valid in the context of the project directory, becomes invalid when the execution context changes to the directory of the main file. This is because Python's import function searches for modules in the directories listed in `sys.path`. By default, `sys.path` includes the directory of the script that was used to invoke the Python interpreter, which would be the directory of the main file in this case. If module B is not in the same directory as the main file, or in a directory that has been added to `sys.path`, Python will not be able to find it, resulting in an import error.
+The relative import path in module B, which is valid in the context of the project directory, becomes invalid when the execution context changes to the directory of the main file. This is because Python's import function searches for modules in the directories listed in `sys.path`. By default, `sys.path` includes the directory of the script that was used to invoke the Python interpreter, which would be the directory of the main file in this case. If module B is not in the same directory as the main file, or in a directory that has been added to `sys.path`, Python will not be able to find the relative path used in module_B, resulting in an import error.
 
 One could adjust the relative import path in module B to be valid in the context of the main file, but this would then break the ability to execute module B as a standalone script within the project directory.
 
 
 ## Issue #2
 
-In Python, the dot notation in import statements is used for relative imports. A single dot represents the current package or directory, two dots represent the parent directory, and so on. Therefore, if module B wants to import module A that resides in a directory above its own, it would use two dots in the import statement.
+In Python, the dot notation in import statements is used for relative imports. A single dot represents the current package or directory, two dots represent the parent directory, and so on. Therefore, if module B wants to import module A that resides in the directory above its own, it would use two dots in the import statement.
 
 However, this approach has a limitation. Python's relative imports are designed to work within a package. When Python encounters a dot in an import statement, it tries to resolve it relative to the current module's directory. If the current module is not part of a package (which is the case when the module is run as a standalone script), or if the import statement tries to navigate above the top-level package, Python raises an ImportError.
 
@@ -51,7 +51,7 @@ The reason for this behavior lies in the way Python handles imports. When a scri
 
 ## Solution
 
-A viable solution to the issues of relative imports in Python could involve appending the absolute path of the shared top-level directory to the system path (`sys.path`). This shared top-level directory represents the first directory that is common between the current module (module B in this example) and the module being imported (module A). By appending the path of this shared top-level directory to `sys.path`, Python is instructed to also search in this directory when attempting to import modules and it eliminates the need for relative imports using dot notation.
+A viable, and probably the only simple solution to the issues of relative imports in Python is to append the absolute path of the shared top-level directory to the system path (`sys.path`). This shared top-level directory represents the first directory that is common between the current module (module B in this example) and the module being imported (module A). By appending the path of this shared top-level directory to `sys.path`, Python is instructed to also search in this directory when attempting to import modules and it eliminates the need for relative imports using dot notation.
 
 This appending is done in the module where the import of module A is needed, by leveraging the `__file__` attribute. This attribute consistently provides the path to the file in which it is used - in this example module B - regardless of the execution context.
 
@@ -61,7 +61,7 @@ The `os.path.realpath()`, `os.path.join()` and `os.path.dirname()` functions are
 
 ## Example
 
-`main.py` imports from `module_B.py`, which in turn imports from `module_A.py` and `module_C.py`. To ensure the successful import of `module_A.py` and `module_C.py` regardless of whether the execution context is `main.py` or `module_B.py`, it is necessary to append the absolute path of their shared top-level directory to `sys.path` and import relative to it.
+`main.py` imports from `module_B.py`, which in turn imports from `module_A.py` and `module_C.py`. To ensure the successful import from `module_A.py` and `module_C.py` regardless of whether the execution context is `main.py` or `module_B.py`, it is necessary to append the absolute path of their shared top-level directory to `sys.path` and import relative to it.
 
 ```
 my_project
