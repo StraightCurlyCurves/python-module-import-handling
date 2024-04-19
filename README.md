@@ -16,7 +16,7 @@ This repository addresses two common issues encountered in Python programming re
 
 An issue occurs when:
 - the execution context shifts outside the project directory
-- an attempt is made to perform a relative import using dot notation swhile running the script in a standalone mode.
+- an attempt is made to perform a relative import using dot notation swhile running the script as standalone.
 
 The first issue arises due to the relative import path in module B becoming invalid when the execution context changes to a directory outside the project, such as when importing module B from a main file located elsewhere.
 
