@@ -76,7 +76,7 @@ my_project
         └───module_C.py
 ```
 
-The following code is from [`module_B.py`](my_package/my_modules_BC/module_B.py):
+[`module_B.py`](my_package/my_modules_BC/module_B.py) could look like this:
 ```python
 import sys, os
 
