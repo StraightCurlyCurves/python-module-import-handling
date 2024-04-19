@@ -100,4 +100,4 @@ from my_package.my_modules_BC.module_B import foo_module_B
 
 
 ### Try it out
-All files are provided within this repository. Feel free to experiment with alternatives to manage relative imports, and see how they most likely will fail in one way or the other ;)
+This repository contains all the necessary files to reproduce the scenario described above. Feel free to experiment with alternatives to manage relative imports, and see how they most likely will fail in one way or the other ;)
