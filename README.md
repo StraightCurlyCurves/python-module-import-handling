@@ -27,7 +27,7 @@ The proposed solution involves appending the absolute path of the shared top-lev
 
 This approach ensures the successful import of module A irrespective of the execution context, thereby resolving the first issue of relative import failures.
 
-Furthermore, it eliminates the need for relative imports using dot notation. Consequently, the second issue associated with import failures when the script is run as a standalone script, is effectively resolved.
+Furthermore, it eliminates the need for relative imports using dot notation. Consequently, the second issue associated with relative import failures when the script is run directly, is effectively resolved.
 
 
 
